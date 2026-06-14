@@ -1,0 +1,74 @@
+# ───────────────────────────────────────────────
+#  Chaufctionary — .gitignore
+#  Backend ASP.NET Core (.NET) + Frontend Angular
+# ───────────────────────────────────────────────
+
+# ============ .NET / ASP.NET Core ============
+backend/**/bin/
+backend/**/obj/
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+*.DotSettings.user
+
+# Fichiers de build / publish
+publish/
+[Pp]ublish/
+*.nupkg
+
+# ============ Secrets backend (DÉPÔT PUBLIC !) ============
+# On NE versionne PAS les vrais secrets (chaîne de connexion BDD, clé JWT).
+# Garde un appsettings.json "template" sans secret, et ignore les variantes locales :
+backend/**/appsettings.Development.json
+backend/**/appsettings.Local.json
+backend/**/appsettings.*.Local.json
+secrets.json
+*.pfx
+
+# ============ Angular / Node ============
+frontend/node_modules/
+node_modules/
+frontend/dist/
+dist/
+frontend/.angular/
+.angular/cache/
+frontend/coverage/
+coverage/
+
+# Logs npm/yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environnements Angular avec secrets éventuels (optionnel — voir note)
+# frontend/src/environments/environment.local.ts
+
+# ============ Bases de données locales / dumps ============
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# ============ OS ============
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============ Divers ============
+*.log
+*.tmp
+
+# ============ Fichiers IA / outils perso (non livrables) ============
+CLAUDE.md
+.claude/
+consignes.pdf
