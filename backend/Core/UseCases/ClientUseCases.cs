@@ -1,0 +1,33 @@
+using Core.IGateways;
+using Core.Models;
+using Core.UseCases.Abstractions;
+
+namespace Core.UseCases;
+
+public class ClientUseCases : IClientUseCases
+{
+    private readonly IClientGateway _clientGateway;
+
+    public ClientUseCases(IClientGateway clientGateway)
+    {
+        _clientGateway = clientGateway;
+    }
+
+    public IEnumerable<Client> GetAll()
+    {
+        return _clientGateway.GetAll();
+    }
+
+    public IEnumerable<Client> Rechercher(string terme)
+    {
+        if (string.IsNullOrWhiteSpace(terme))
+            return _clientGateway.GetAll();
+
+        return _clientGateway.Rechercher(terme);
+    }
+
+    public Client? GetById(int id)
+    {
+        return _clientGateway.GetById(id);
+    }
+}

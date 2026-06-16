@@ -45,5 +45,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.AddAuthRoutes();
+app.AddClientRoutes();
 
 app.Run();
