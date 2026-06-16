@@ -15,6 +15,7 @@ public static class ClientRoutes
             var clients = clientUseCases.Rechercher(recherche ?? "");
             return Results.Ok(clients);
         });
+
         group.MapGet("{id:int}", (int id, IClientUseCases clientUseCases) =>
         {
             var client = clientUseCases.GetById(id);
