@@ -41,4 +41,21 @@ public class ClientRepository : IClientRepository
         using var connection = CreateConnection();
         return connection.QuerySingleOrDefault<Client>(sql, new { Id = id });
     }
+
+
+    public Client? Modifier(Client client)
+    {
+        const string sql = @"UPDATE Client
+                             SET Nom = @Nom,
+                                 Adresse = @Adresse,
+                                 Ville = @Ville,
+                                 CodePostal = @CodePostal,
+                                 Telephone = @Telephone,
+                                 Latitude = @Latitude,
+                                 Longitude = @Longitude
+                             WHERE Id = @Id;";
+        using var connection = CreateConnection();
+        var lignesModifiees = connection.Execute(sql, client);
+        return lignesModifiees > 0 ? client : null;
+    }
 }

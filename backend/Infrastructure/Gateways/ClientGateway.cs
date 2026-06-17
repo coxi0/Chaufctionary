@@ -28,6 +28,33 @@ public class ClientGateway : IClientGateway
         return infra is null ? null : Map(infra);
     }
 
+    public Core.Models.Client? Modifier(Core.Models.Client client)
+    {
+        // 1. Traduire Core → Infra (la donnée descend vers la BDD).
+        var infra = MapToInfra(client);
+
+        // 2. Appeler le repository, qui fait le UPDATE Dapper.
+        var resultat = _clientRepository.Modifier(infra);
+
+        // 3. Retraduire Infra → Core (la donnée remonte) ; null si rien modifié.
+        return resultat is null ? null : Map(resultat);
+    }
+
+    private static Infrastructure.Models.Client MapToInfra(Core.Models.Client c)
+    {
+        return new Infrastructure.Models.Client
+        {
+            Id = c.Id,
+            Nom = c.Nom,
+            Adresse = c.Adresse,
+            Ville = c.Ville,
+            CodePostal = c.CodePostal,
+            Telephone = c.Telephone,
+            Latitude = c.Latitude,
+            Longitude = c.Longitude
+        };
+    }
+
     private static Core.Models.Client Map(Infrastructure.Models.Client c)
     {
         return new Core.Models.Client

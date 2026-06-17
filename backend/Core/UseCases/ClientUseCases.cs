@@ -30,4 +30,16 @@ public class ClientUseCases : IClientUseCases
     {
         return _clientGateway.GetById(id);
     }
+
+    public Client? Modifier(Client client)
+    {
+        if (string.IsNullOrWhiteSpace(client.Nom))
+            throw new ArgumentException("Le nom du client est obligatoire.");
+
+        var existant = _clientGateway.GetById(client.Id);
+        if (existant is null)
+            return null;
+
+        return _clientGateway.Modifier(client);
+    }
 }

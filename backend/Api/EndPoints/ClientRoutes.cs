@@ -1,3 +1,4 @@
+using Core.Models;
 using Core.UseCases.Abstractions;
 
 namespace Api.EndPoints;
@@ -21,6 +22,21 @@ public static class ClientRoutes
             var client = clientUseCases.GetById(id);
             return client is null ? Results.NotFound() : Results.Ok(client);
         });
+
+        group.MapPut("{id:int}", (int id, Client client, IClientUseCases clientUseCases) =>
+        {
+            client.Id = id; // l'id qui fait foi est celui de l'URL, pas celui du corps.
+            try
+            {
+                var modifie = clientUseCases.Modifier(client);
+                return modifie is null ? Results.NotFound() : Results.Ok(modifie);
+            }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { erreur = ex.Message });
+            }
+        })
+        .RequireAuthorization(policy => policy.RequireRole("Planneur", "Admin"));
 
         return app;
     }
