@@ -1,0 +1,16 @@
+<h1>Clients</h1>
+
+<input [(ngModel)]="recherche" placeholder="Nom ou ville..." />
+<button (click)="charger()">Rechercher</button>
+
+@if (clients().length === 0) {
+  <p>Aucun client trouvé.</p>
+} @else {
+  <ul>
+    @for (c of clients(); track c.id) {
+      <li>
+        <a [routerLink]="['/clients', c.id]">{{ c.nom }}</a> — {{ c.ville }}
+      </li>
+    }
+  </ul>
+}

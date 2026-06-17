@@ -1,0 +1,10 @@
+<a routerLink="/clients">← Retour à la liste</a>
+
+@if (client(); as c) {
+  <h1>{{ c.nom }}</h1>
+  <p>{{ c.adresse }}, {{ c.codePostal }} {{ c.ville }}</p>
+  <p>Téléphone : {{ c.telephone }}</p>
+  <p>GPS : {{ c.latitude }}, {{ c.longitude }}</p>
+} @else {
+  <p>Chargement...</p>
+}

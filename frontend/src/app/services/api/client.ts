@@ -1,0 +1,29 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
+export interface Client {
+  id: number;
+  nom: string;
+  adresse: string;
+  ville: string;
+  codePostal: string;
+  telephone: string;
+  latitude: number;
+  longitude: number;
+}
+
+@Injectable({ providedIn: 'root' })
+export class ClientApi {
+  private http = inject(HttpClient);
+  private url = `${environment.apiUrl}/api/clients`;
+
+  rechercher(terme: string): Observable<Client[]> {
+    return this.http.get<Client[]>(this.url, { params: { recherche: terme } });
+  }
+
+  getById(id: number): Observable<Client> {
+    return this.http.get<Client>(`${this.url}/${id}`);
+  }
+}
