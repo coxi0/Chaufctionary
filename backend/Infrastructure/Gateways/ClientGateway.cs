@@ -30,13 +30,10 @@ public class ClientGateway : IClientGateway
 
     public Core.Models.Client? Modifier(Core.Models.Client client)
     {
-        // 1. Traduire Core → Infra (la donnée descend vers la BDD).
         var infra = MapToInfra(client);
 
-        // 2. Appeler le repository, qui fait le UPDATE Dapper.
         var resultat = _clientRepository.Modifier(infra);
 
-        // 3. Retraduire Infra → Core (la donnée remonte) ; null si rien modifié.
         return resultat is null ? null : Map(resultat);
     }
 

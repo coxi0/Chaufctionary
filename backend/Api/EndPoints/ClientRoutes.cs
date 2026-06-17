@@ -25,7 +25,7 @@ public static class ClientRoutes
 
         group.MapPut("{id:int}", (int id, Client client, IClientUseCases clientUseCases) =>
         {
-            client.Id = id; // l'id qui fait foi est celui de l'URL, pas celui du corps.
+            client.Id = id; 
             try
             {
                 var modifie = clientUseCases.Modifier(client);
