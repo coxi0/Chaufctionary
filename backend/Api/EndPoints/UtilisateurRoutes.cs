@@ -10,12 +10,24 @@ public static class UtilisateurRoutes
     public static WebApplication AddUtilisateurRoutes(this WebApplication app)
     {
         var group = app.MapGroup("api/utilisateurs")
-            .RequireAuthorization()
+            .RequireAuthorization(policy => policy.RequireRole("Planneur", "Admin"))
             .WithTags("Utilisateurs");
+
+        group.MapGet("", (IUserUseCases userUseCases) =>
+        {
+            var utilisateurs = userUseCases.GetTous().Select(ToResponse);
+            return Results.Ok(utilisateurs);
+        });
+
+        group.MapGet("{id:int}", (int id, IUserUseCases userUseCases) =>
+        {
+            var utilisateur = userUseCases.GetById(id);
+            return utilisateur is null ? Results.NotFound() : Results.Ok(ToResponse(utilisateur));
+        });
 
         group.MapPost("", (RegisterRequest request, IUserUseCases userUseCases, HttpContext httpContext) =>
         {
-            var roleCreateur = httpContext.User.FindFirstValue(ClaimTypes.Role);
+            var roleGestionnaire = httpContext.User.FindFirstValue(ClaimTypes.Role);
 
             var utilisateur = new Utilisateur
             {
@@ -28,16 +40,66 @@ public static class UtilisateurRoutes
 
             try
             {
-                userUseCases.CreerUtilisateur(utilisateur, roleCreateur);
+                userUseCases.CreerUtilisateur(utilisateur, roleGestionnaire);
                 return Results.Created();
             }
             catch (ArgumentException ex)
             {
                 return Results.BadRequest(new { erreur = ex.Message });
             }
-        })
-        .RequireAuthorization(policy => policy.RequireRole("Planneur", "Admin"));
+        });
+
+        group.MapPut("{id:int}", (int id, ModifierUtilisateurRequest request, IUserUseCases userUseCases, HttpContext httpContext) =>
+        {
+            var roleGestionnaire = httpContext.User.FindFirstValue(ClaimTypes.Role);
+
+            var utilisateur = new Utilisateur
+            {
+                Id = id,
+                Nom = request.Nom,
+                Prenom = request.Prenom,
+                Email = request.Email,
+                EstActif = request.EstActif,
+                RoleId = request.RoleId
+            };
+
+            try
+            {
+                var ok = userUseCases.ModifierUtilisateur(utilisateur, roleGestionnaire);
+                return ok ? Results.NoContent() : Results.NotFound();
+            }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { erreur = ex.Message });
+            }
+        });
+
+        group.MapDelete("{id:int}", (int id, IUserUseCases userUseCases, HttpContext httpContext) =>
+        {
+            var roleGestionnaire = httpContext.User.FindFirstValue(ClaimTypes.Role);
+
+            try
+            {
+                var ok = userUseCases.SupprimerUtilisateur(id, roleGestionnaire);
+                return ok ? Results.NoContent() : Results.NotFound();
+            }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { erreur = ex.Message });
+            }
+        });
 
         return app;
     }
+
+    private static UtilisateurResponse ToResponse(Utilisateur u) => new()
+    {
+        Id = u.Id,
+        Nom = u.Nom,
+        Prenom = u.Prenom,
+        Email = u.Email,
+        EstActif = u.EstActif,
+        RoleId = u.RoleId,
+        Role = u.Role
+    };
 }

@@ -5,6 +5,9 @@ namespace Core.UseCases.Abstractions;
 public interface IUserUseCases
 {
     Utilisateur? Login(string email, string motDePasse);
-    void Register(Utilisateur utilisateur);
-    void CreerUtilisateur(Utilisateur utilisateur, string? roleCreateur);
+    IEnumerable<Utilisateur> GetTous();
+    Utilisateur? GetById(int id);
+    void CreerUtilisateur(Utilisateur utilisateur, string? roleGestionnaire);
+    bool ModifierUtilisateur(Utilisateur utilisateur, string? roleGestionnaire);
+    bool SupprimerUtilisateur(int id, string? roleGestionnaire);
 }
