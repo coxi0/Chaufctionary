@@ -29,6 +29,28 @@ public class UserRepository : IUserRepository
         using var connection = CreateConnection();
         return connection.QuerySingleOrDefault<Utilisateur>(sql, new { Email = email });
     }
+    public IEnumerable<Utilisateur> GetAll()
+    {
+        const string sql = @"SELECT u.Id, u.Nom, u.Prenom, u.Email, u.MotDePasse,
+                                    u.EstActif, u.RoleId, r.Libelle AS Role
+                             FROM Utilisateur u
+                             INNER JOIN Role r ON u.RoleId = r.Id
+                             ORDER BY u.Id;";
+        using var connection = CreateConnection();
+        return connection.Query<Utilisateur>(sql);
+    }
+
+    public Utilisateur? GetById(int id)
+    {
+        const string sql = @"SELECT u.Id, u.Nom, u.Prenom, u.Email, u.MotDePasse,
+                                    u.EstActif, u.RoleId, r.Libelle AS Role
+                             FROM Utilisateur u
+                             INNER JOIN Role r ON u.RoleId = r.Id
+                             WHERE u.Id = @Id;";
+        using var connection = CreateConnection();
+        return connection.QuerySingleOrDefault<Utilisateur>(sql, new { Id = id });
+    }
+
     public void Add(Utilisateur user)
     {
         const string sql = @"INSERT INTO Utilisateur (Nom, Prenom, Email, MotDePasse, EstActif, RoleId)
@@ -37,5 +59,20 @@ public class UserRepository : IUserRepository
         connection.Execute(sql, user);
     }
 
+    public void Update(Utilisateur user)
+    {
+        const string sql = @"UPDATE Utilisateur
+                             SET Nom = @Nom, Prenom = @Prenom, Email = @Email,
+                                 EstActif = @EstActif, RoleId = @RoleId
+                             WHERE Id = @Id;";
+        using var connection = CreateConnection();
+        connection.Execute(sql, user);
+    }
 
+    public bool Delete(int id)
+    {
+        const string sql = "DELETE FROM Utilisateur WHERE Id = @Id;";
+        using var connection = CreateConnection();
+        return connection.Execute(sql, new { Id = id }) > 0;
+    }
 }

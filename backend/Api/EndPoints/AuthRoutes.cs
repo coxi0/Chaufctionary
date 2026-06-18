@@ -1,6 +1,5 @@
 using Api.Models;
 using Api.Services;
-using Core.Models;
 using Core.UseCases.Abstractions;
 
 namespace Api.EndPoints;
@@ -19,22 +18,6 @@ public static class AuthRoutes
 
             var token = tokenService.GenerateToken(utilisateur);
             return Results.Ok(new { token });
-        });
-
-        group.MapPost("register", (RegisterRequest request, IUserUseCases userUseCases) =>
-        {
-            var utilisateur = new Utilisateur
-            {
-                Nom = request.Nom,
-                Prenom = request.Prenom,
-                Email = request.Email,
-                MotDePasse = request.MotDePasse,
-                EstActif = true,
-                RoleId = request.RoleId
-            };
-
-            userUseCases.Register(utilisateur);
-            return Results.Created();
         });
 
         return app;

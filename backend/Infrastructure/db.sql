@@ -26,6 +26,11 @@ INSERT INTO Role (Libelle) VALUES
     ('Planneur'),
     ('Admin');
 
+INSERT INTO Utilisateur (Nom, Prenom, Email, MotDePasse, EstActif, RoleId) VALUES
+    ('Admin', 'Root', 'admin@test.com', '$2a$11$BykRmB105usItAXWBTi.6OvB99sKZra8A8r79OcY7yDYDAglqgYru', TRUE, 3),
+    ('Planneur', 'Test', 'planneur@test.com', '$2a$11$J123K3LrVfof9puzSKWsk.dmWsm8LUJQfS9uYDjanhUz2h4weBM/S', TRUE, 2),
+    ('Chauffeur', 'Test', 'chauffeur@test.com', '$2a$11$D4DigTOgo9MGdzMY77vNWOeBvKntx21Mg2AmFVPeRURqISfc.psxW', TRUE, 1);
+
 
 CREATE TABLE Client (
     Id         INT AUTO_INCREMENT PRIMARY KEY,

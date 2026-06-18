@@ -1,6 +1,6 @@
 <a routerLink="/utilisateurs">← Retour à la liste</a>
 
-<h1>Nouvel utilisateur</h1>
+<h1>Modifier l'utilisateur</h1>
 
 <form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
   <label>Nom</label>
@@ -12,9 +12,6 @@
   <label>Email</label>
   <input type="email" formControlName="email" />
 
-  <label>Mot de passe</label>
-  <input type="password" formControlName="motDePasse" />
-
   <label>Rôle</label>
   <select formControlName="roleId">
     @for (r of rolesDisponibles(); track r.id) {
@@ -22,9 +19,13 @@
     }
   </select>
 
+  <label class="checkbox">
+    <input type="checkbox" formControlName="estActif" /> Compte actif
+  </label>
+
   @if (erreur()) {
     <p class="erreur">{{ erreur() }}</p>
   }
 
-  <button type="submit" [disabled]="form.invalid">Créer</button>
+  <button type="submit" [disabled]="form.invalid">Enregistrer</button>
 </form>

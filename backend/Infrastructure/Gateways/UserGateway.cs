@@ -15,33 +15,61 @@ public class UserGateway : IUserGateway
     public Core.Models.Utilisateur? GetByEmail(string email)
     {
         var infra = _userRepository.GetByEmail(email);
-        if (infra is null)
-            return null;
+        return infra is null ? null : Map(infra);
+    }
 
-        return new Core.Models.Utilisateur
-        {
-            Id = infra.Id,
-            Nom = infra.Nom,
-            Prenom = infra.Prenom,
-            Email = infra.Email,
-            MotDePasse = infra.MotDePasse,
-            EstActif = infra.EstActif,
-            RoleId = infra.RoleId,
-            Role = infra.Role
-        };
+    public IEnumerable<Core.Models.Utilisateur> GetAll()
+    {
+        return _userRepository.GetAll().Select(Map);
+    }
+
+    public Core.Models.Utilisateur? GetById(int id)
+    {
+        var infra = _userRepository.GetById(id);
+        return infra is null ? null : Map(infra);
     }
 
     public void Add(Core.Models.Utilisateur user)
     {
-        var infra = new Infrastructure.Models.Utilisateur
+        _userRepository.Add(MapToInfra(user));
+    }
+
+    public void Update(Core.Models.Utilisateur user)
+    {
+        _userRepository.Update(MapToInfra(user));
+    }
+
+    public bool Delete(int id)
+    {
+        return _userRepository.Delete(id);
+    }
+
+    private static Core.Models.Utilisateur Map(Infrastructure.Models.Utilisateur u)
+    {
+        return new Core.Models.Utilisateur
         {
-            Nom = user.Nom,
-            Prenom = user.Prenom,
-            Email = user.Email,
-            MotDePasse = user.MotDePasse,
-            EstActif = user.EstActif,
-            RoleId = user.RoleId
+            Id = u.Id,
+            Nom = u.Nom,
+            Prenom = u.Prenom,
+            Email = u.Email,
+            MotDePasse = u.MotDePasse,
+            EstActif = u.EstActif,
+            RoleId = u.RoleId,
+            Role = u.Role
         };
-        _userRepository.Add(infra);
+    }
+
+    private static Infrastructure.Models.Utilisateur MapToInfra(Core.Models.Utilisateur u)
+    {
+        return new Infrastructure.Models.Utilisateur
+        {
+            Id = u.Id,
+            Nom = u.Nom,
+            Prenom = u.Prenom,
+            Email = u.Email,
+            MotDePasse = u.MotDePasse,
+            EstActif = u.EstActif,
+            RoleId = u.RoleId
+        };
     }
 }
