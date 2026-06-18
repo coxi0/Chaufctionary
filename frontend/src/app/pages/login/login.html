@@ -1,15 +1,17 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <h1>Connexion</h1>
+<div class="login-wrapper">
+  <form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h1>Connexion</h1>
 
-  <label>Email</label>
-  <input type="email" formControlName="email" />
+    <label>Email</label>
+    <input type="email" formControlName="email" />
 
-  <label>Mot de passe</label>
-  <input type="password" formControlName="motDePasse" />
+    <label>Mot de passe</label>
+    <input type="password" formControlName="motDePasse" />
 
-  @if (erreur()) {
-    <p class="erreur">{{ erreur() }}</p>
-  }
+    @if (erreur()) {
+      <p class="erreur">{{ erreur() }}</p>
+    }
 
-  <button type="submit" [disabled]="form.invalid">Se connecter</button>
-</form>
+    <button type="submit" [disabled]="form.invalid">Se connecter</button>
+  </form>
+</div>

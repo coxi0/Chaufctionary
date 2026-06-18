@@ -31,6 +31,14 @@ public class ClientUseCases : IClientUseCases
         return _clientGateway.GetById(id);
     }
 
+    public Client Creer(Client client)
+    {
+        if (string.IsNullOrWhiteSpace(client.Nom))
+            throw new ArgumentException("Le nom du client est obligatoire.");
+
+        return _clientGateway.Creer(client);
+    }
+
     public Client? Modifier(Client client)
     {
         if (string.IsNullOrWhiteSpace(client.Nom))
@@ -41,5 +49,10 @@ public class ClientUseCases : IClientUseCases
             return null;
 
         return _clientGateway.Modifier(client);
+    }
+
+    public bool Supprimer(int id)
+    {
+        return _clientGateway.Supprimer(id);
     }
 }

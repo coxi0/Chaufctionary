@@ -28,6 +28,13 @@ public class ClientGateway : IClientGateway
         return infra is null ? null : Map(infra);
     }
 
+    public Core.Models.Client Creer(Core.Models.Client client)
+    {
+        var infra = MapToInfra(client);
+        var resultat = _clientRepository.Creer(infra);
+        return Map(resultat);
+    }
+
     public Core.Models.Client? Modifier(Core.Models.Client client)
     {
         var infra = MapToInfra(client);
@@ -35,6 +42,11 @@ public class ClientGateway : IClientGateway
         var resultat = _clientRepository.Modifier(infra);
 
         return resultat is null ? null : Map(resultat);
+    }
+
+    public bool Supprimer(int id)
+    {
+        return _clientRepository.Supprimer(id);
     }
 
     private static Infrastructure.Models.Client MapToInfra(Core.Models.Client c)

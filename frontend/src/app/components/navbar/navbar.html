@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <a class="brand" routerLink="/">🚚 Chaufctionary</a>
+
+  @if (estConnecte()) {
+    <div class="links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+      <a routerLink="/clients" routerLinkActive="active">Clients</a>
+      @if (peutGererUtilisateurs()) {
+        <a routerLink="/utilisateurs/nouveau" routerLinkActive="active">Utilisateurs</a>
+      }
+    </div>
+
+    <div class="right">
+      <span class="badge">{{ role() }}</span>
+      <button (click)="deconnexion()">Déconnexion</button>
+    </div>
+  }
+</nav>

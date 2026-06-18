@@ -6,4 +6,5 @@ public interface IUserUseCases
 {
     Utilisateur? Login(string email, string motDePasse);
     void Register(Utilisateur utilisateur);
+    void CreerUtilisateur(Utilisateur utilisateur, string? roleCreateur);
 }

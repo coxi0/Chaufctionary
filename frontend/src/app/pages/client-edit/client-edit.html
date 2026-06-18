@@ -1,0 +1,35 @@
+<a [routerLink]="['/clients', id]">← Retour à la fiche</a>
+
+<h1>Modifier le client</h1>
+
+<form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>Nom</label>
+  <input formControlName="nom" />
+  @if (form.controls.nom.invalid && form.controls.nom.touched) {
+    <p class="erreur">Le nom est obligatoire.</p>
+  }
+
+  <label>Adresse</label>
+  <input formControlName="adresse" />
+
+  <label>Ville</label>
+  <input formControlName="ville" />
+
+  <label>Code postal</label>
+  <input formControlName="codePostal" />
+
+  <label>Téléphone</label>
+  <input formControlName="telephone" />
+
+  <label>Latitude</label>
+  <input type="number" formControlName="latitude" />
+
+  <label>Longitude</label>
+  <input type="number" formControlName="longitude" />
+
+  @if (erreur()) {
+    <p class="erreur">{{ erreur() }}</p>
+  }
+
+  <button type="submit" [disabled]="form.invalid">Enregistrer</button>
+</form>

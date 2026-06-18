@@ -1,14 +1,9 @@
-.login-wrapper {
-  display: flex;
-  justify-content: center;
-  padding-top: 40px;
-}
-
 form.card {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  width: 320px;
+  gap: 4px;
+  max-width: 480px;
+  margin-top: 12px;
 }
 
 label {
@@ -19,4 +14,5 @@ label {
 
 button {
   margin-top: 16px;
+  align-self: flex-start;
 }

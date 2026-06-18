@@ -43,6 +43,17 @@ public class ClientRepository : IClientRepository
     }
 
 
+    public Client Creer(Client client)
+    {
+        const string sql = @"INSERT INTO Client (Nom, Adresse, Ville, CodePostal, Telephone, Latitude, Longitude)
+                             VALUES (@Nom, @Adresse, @Ville, @CodePostal, @Telephone, @Latitude, @Longitude);
+                             SELECT LAST_INSERT_ID();";
+        using var connection = CreateConnection();
+        var nouvelId = connection.QuerySingle<int>(sql, client);
+        client.Id = nouvelId;
+        return client;
+    }
+
     public Client? Modifier(Client client)
     {
         const string sql = @"UPDATE Client
@@ -57,5 +68,13 @@ public class ClientRepository : IClientRepository
         using var connection = CreateConnection();
         var lignesModifiees = connection.Execute(sql, client);
         return lignesModifiees > 0 ? client : null;
+    }
+
+    public bool Supprimer(int id)
+    {
+        const string sql = "DELETE FROM Client WHERE Id = @Id;";
+        using var connection = CreateConnection();
+        var lignesSupprimees = connection.Execute(sql, new { Id = id });
+        return lignesSupprimees > 0;
     }
 }

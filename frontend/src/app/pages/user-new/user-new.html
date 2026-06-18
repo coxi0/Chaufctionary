@@ -1,0 +1,31 @@
+<h1>Nouvel utilisateur</h1>
+
+<form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>Nom</label>
+  <input formControlName="nom" />
+
+  <label>Prénom</label>
+  <input formControlName="prenom" />
+
+  <label>Email</label>
+  <input type="email" formControlName="email" />
+
+  <label>Mot de passe</label>
+  <input type="password" formControlName="motDePasse" />
+
+  <label>Rôle</label>
+  <select formControlName="roleId">
+    @for (r of rolesDisponibles(); track r.id) {
+      <option [ngValue]="r.id">{{ r.libelle }}</option>
+    }
+  </select>
+
+  @if (erreur()) {
+    <p class="erreur">{{ erreur() }}</p>
+  }
+  @if (succes()) {
+    <p class="succes">Utilisateur créé ✅</p>
+  }
+
+  <button type="submit" [disabled]="form.invalid">Créer</button>
+</form>

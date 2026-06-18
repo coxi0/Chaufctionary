@@ -1,10 +1,21 @@
 <a routerLink="/clients">← Retour à la liste</a>
 
 @if (client(); as c) {
-  <h1>{{ c.nom }}</h1>
-  <p>{{ c.adresse }}, {{ c.codePostal }} {{ c.ville }}</p>
-  <p>Téléphone : {{ c.telephone }}</p>
-  <p>GPS : {{ c.latitude }}, {{ c.longitude }}</p>
+  <div class="card detail">
+    <h1>{{ c.nom }}</h1>
+    <p>{{ c.adresse }}, {{ c.codePostal }} {{ c.ville }}</p>
+    <p class="muted">Téléphone : {{ c.telephone }}</p>
+    <p class="muted">GPS : {{ c.latitude }}, {{ c.longitude }}</p>
+
+    <div class="actions">
+      @if (peutModifier()) {
+        <button [routerLink]="['/clients', c.id, 'modifier']">Modifier</button>
+      }
+      @if (peutSupprimer()) {
+        <button class="danger" (click)="supprimer()">Supprimer</button>
+      }
+    </div>
+  </div>
 } @else {
   <p>Chargement...</p>
 }

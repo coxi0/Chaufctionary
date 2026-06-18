@@ -26,4 +26,16 @@ export class ClientApi {
   getById(id: number): Observable<Client> {
     return this.http.get<Client>(`${this.url}/${id}`);
   }
+
+  creer(client: Omit<Client, 'id'>): Observable<Client> {
+    return this.http.post<Client>(this.url, client);
+  }
+
+  modifier(id: number, client: Omit<Client, 'id'>): Observable<Client> {
+    return this.http.put<Client>(`${this.url}/${id}`, client);
+  }
+
+  supprimer(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
+  }
 }

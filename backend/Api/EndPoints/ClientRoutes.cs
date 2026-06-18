@@ -23,6 +23,20 @@ public static class ClientRoutes
             return client is null ? Results.NotFound() : Results.Ok(client);
         });
 
+        group.MapPost("", (Client client, IClientUseCases clientUseCases) =>
+        {
+            try
+            {
+                var cree = clientUseCases.Creer(client);
+                return Results.Created($"/api/clients/{cree.Id}", cree);
+            }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { erreur = ex.Message });
+            }
+        })
+        .RequireAuthorization(policy => policy.RequireRole("Planneur", "Admin"));
+
         group.MapPut("{id:int}", (int id, Client client, IClientUseCases clientUseCases) =>
         {
             client.Id = id; 
@@ -35,6 +49,13 @@ public static class ClientRoutes
             {
                 return Results.BadRequest(new { erreur = ex.Message });
             }
+        })
+        .RequireAuthorization(policy => policy.RequireRole("Planneur", "Admin"));
+
+        group.MapDelete("{id:int}", (int id, IClientUseCases clientUseCases) =>
+        {
+            var supprime = clientUseCases.Supprimer(id);
+            return supprime ? Results.NoContent() : Results.NotFound();
         })
         .RequireAuthorization(policy => policy.RequireRole("Planneur", "Admin"));
 

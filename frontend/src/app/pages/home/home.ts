@@ -1,6 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { AuthState } from '../../services/auth-state';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,12 +7,4 @@ import { AuthState } from '../../services/auth-state';
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home {
-  private authState = inject(AuthState);
-  private router = inject(Router);
-
-  deconnexion(): void {
-    this.authState.logout();
-    this.router.navigate(['/login']);
-  }
-}
+export class Home {}

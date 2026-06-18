@@ -1,0 +1,62 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--primary);
+  color: #fff;
+  padding: 0 20px;
+  height: 56px;
+  box-shadow: var(--shadow);
+}
+
+.brand {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+.links {
+  display: flex;
+  gap: 4px;
+}
+
+.links a {
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.links a:hover {
+  background: rgba(255, 255, 255, .15);
+  text-decoration: none;
+}
+
+.links a.active {
+  background: rgba(255, 255, 255, .25);
+}
+
+.right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.badge {
+  background: rgba(255, 255, 255, .2);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: .8rem;
+}
+
+.right button {
+  background: rgba(255, 255, 255, .15);
+}
+
+.right button:hover {
+  background: rgba(255, 255, 255, .3);
+}

@@ -1,0 +1,21 @@
+.detail {
+  margin-top: 12px;
+}
+
+.detail h1 {
+  margin-top: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+button.danger:hover {
+  background: #b91c1c;
+}
