@@ -34,7 +34,6 @@ export class ClientEdit implements OnInit {
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-    // Proposition transmise par la page Demandes (query param), pour comparaison.
     this.proposition.set(this.route.snapshot.queryParamMap.get('proposition'));
     this.api.getById(this.id).subscribe(c =>
       this.form.patchValue({ ...c, notes: c.notes ?? '', conseilAcces: c.conseilAcces ?? '' }));

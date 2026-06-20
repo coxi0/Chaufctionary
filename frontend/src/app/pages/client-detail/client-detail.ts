@@ -53,7 +53,7 @@ export class ClientDetail implements OnInit {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.api.getById(this.id).subscribe(c => {
       this.client.set(c);
-      this.messageDemande = c.conseilAcces ?? '';   // pré-remplit avec l'accès actuel
+      this.messageDemande = c.conseilAcces ?? '';
     });
     this.favoriApi.mesFavoris().subscribe(favoris =>
       this.estFavori.set(favoris.some(c => c.id === this.id)));

@@ -39,7 +39,6 @@ public static class DemandeRoutes
             return Results.Ok(demandes);
         });
 
-        // Le planneur/admin liste toutes les demandes à traiter.
         group.MapGet("", (IDemandeUseCases demandeUseCases) =>
         {
             return Results.Ok(demandeUseCases.GetToutes());

@@ -17,7 +17,6 @@ button {
   align-self: flex-start;
 }
 
-/* Comparaison « accès actuel » vs « proposition du chauffeur » */
 .comparaison {
   display: flex;
   gap: 12px;

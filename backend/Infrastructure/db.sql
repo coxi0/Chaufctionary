@@ -55,7 +55,6 @@ INSERT INTO Client (Numero, Nom, Adresse, Ville, CodePostal, Telephone, Latitude
     ('02009', 'Restaurant Le Nord', '22 boulevard Gambetta', 'Lille', '59000', '0320000004', 50.633000, 3.066000, NULL, NULL);
 
 
--- Table de liaison N-N entre Utilisateur et Client (favoris des chauffeurs)
 CREATE TABLE Favori (
     UtilisateurId INT NOT NULL,
     ClientId      INT NOT NULL,
@@ -66,19 +65,16 @@ CREATE TABLE Favori (
         FOREIGN KEY (ClientId) REFERENCES Client(Id)
 );
 
--- Le chauffeur de test (Id = 3) a 2 clients en favori
 INSERT INTO Favori (UtilisateurId, ClientId) VALUES
     (3, 1),
     (3, 3);
 
 
--- Demandes de modification du CONSEIL D'ACCES, soumises par les chauffeurs,
--- traitees par les planneurs (qui modifient la fiche puis suppriment la demande).
 CREATE TABLE DemandeModification (
     Id            INT AUTO_INCREMENT PRIMARY KEY,
     ClientId      INT NOT NULL,
     UtilisateurId INT NOT NULL,
-    Message       TEXT NOT NULL,                 -- proposition de nouveau conseil d'acces
+    Message       TEXT NOT NULL,
     DateCreation  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT FK_Demande_Client
         FOREIGN KEY (ClientId) REFERENCES Client(Id),
@@ -86,6 +82,5 @@ CREATE TABLE DemandeModification (
         FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id)
 );
 
--- Une demande de test (chauffeur 3 propose un nouvel acces pour le client 1)
 INSERT INTO DemandeModification (ClientId, UtilisateurId, Message) VALUES
     (1, 3, 'Acces modifie : entrer par la rue laterale, se garer cote livraison, repartir en marche arriere');
