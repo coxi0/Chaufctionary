@@ -5,31 +5,33 @@
 @if (utilisateurs().length === 0) {
   <p class="muted">Aucun utilisateur.</p>
 } @else {
-  <table class="users card">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Email</th>
-        <th>Rôle</th>
-        <th>Actif</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (u of utilisateurs(); track u.id) {
+  <div class="table-wrap">
+    <table class="data">
+      <thead>
         <tr>
-          <td>{{ u.prenom }} {{ u.nom }}</td>
-          <td>{{ u.email }}</td>
-          <td>{{ u.role }}</td>
-          <td>{{ u.estActif ? 'Oui' : 'Non' }}</td>
-          <td class="actions">
-            @if (peutGerer(u)) {
-              <a [routerLink]="['/utilisateurs', u.id, 'modifier']">Modifier</a>
-              <button class="danger" (click)="supprimer(u)">Supprimer</button>
-            }
-          </td>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Rôle</th>
+          <th>Actif</th>
+          <th></th>
         </tr>
-      }
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @for (u of utilisateurs(); track u.id) {
+          <tr>
+            <td>{{ u.prenom }} {{ u.nom }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.role }}</td>
+            <td>{{ u.estActif ? 'Oui' : 'Non' }}</td>
+            <td class="actions">
+              @if (peutGerer(u)) {
+                <a [routerLink]="['/utilisateurs', u.id, 'modifier']">Modifier</a>
+                <button class="danger" (click)="supprimer(u)">Supprimer</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

@@ -115,6 +115,9 @@ Trois comptes sont créés par le script SQL (un par rôle) :
 > La création de compte publique est désactivée : seuls un Planneur (crée des
 > Chauffeurs) ou un Admin (crée des Chauffeurs et des Planneurs) peuvent créer
 > des utilisateurs, via l'interface une fois connectés.
+>
+> Le compte **chauffeur** a deux clients pré-enregistrés en favoris : sa page
+> d'accueil affiche donc directement la liste « Mes favoris ».
 
 ---
 

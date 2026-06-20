@@ -1,25 +1,38 @@
 <h1>Clients</h1>
 
 <div class="search">
-  <input [(ngModel)]="recherche" placeholder="Rechercher par nom ou ville..." />
+  <input [(ngModel)]="recherche" (ngModelChange)="charger()" placeholder="Rechercher par nom ou ville..." />
   <button (click)="charger()">Rechercher</button>
+  @if (peutCreer()) {
+    <button routerLink="/clients/nouveau">+ Nouveau client</button>
+  }
 </div>
-
-@if (peutCreer()) {
-  <p><button routerLink="/clients/nouveau">+ Nouveau client</button></p>
-}
 
 @if (clients().length === 0) {
   <p class="muted">Aucun client trouvé.</p>
 } @else {
-  <ul class="client-list">
-    @for (c of clients(); track c.id) {
-      <li class="card">
-        <a [routerLink]="['/clients', c.id]">
-          <strong>{{ c.nom }}</strong>
-          <span class="muted">{{ c.ville }}</span>
-        </a>
-      </li>
-    }
-  </ul>
+  <div class="table-wrap">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>N° client</th>
+          <th>Nom</th>
+          <th>Ville</th>
+          <th>Téléphone</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (c of clients(); track c.id) {
+          <tr>
+            <td class="num">{{ c.numero }}</td>
+            <td>{{ c.nom }}</td>
+            <td>{{ c.ville }}</td>
+            <td>{{ c.telephone }}</td>
+            <td><a [routerLink]="['/clients', c.id]">Ouvrir</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 }

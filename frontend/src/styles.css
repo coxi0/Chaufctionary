@@ -1,14 +1,17 @@
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --bg: #f4f6fb;
+  /* Palette "terminal de tournée" : papier chaud, teal profond, brique */
+  --primary: #1f5c54;
+  --primary-dark: #16443e;
+  --accent: #c9712d;
+  --bg: #f6f4ef;
   --surface: #ffffff;
-  --text: #1f2933;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --danger: #dc2626;
-  --radius: 10px;
-  --shadow: 0 1px 3px rgba(0, 0, 0, .08), 0 1px 2px rgba(0, 0, 0, .04);
+  --text: #1d2321;
+  --muted: #6a726e;
+  --border: #d9d4ca;
+  --danger: #b23b2e;
+  --danger-dark: #8f2e23;
+  --radius: 6px;
+  --shadow: 0 1px 0 rgba(0, 0, 0, .03);
 }
 
 * {
@@ -18,21 +21,32 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 28px 16px;
 }
 
 h1 {
-  font-size: 1.6rem;
-  margin: 0 0 16px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  margin: 0 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary);
+}
+
+h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 28px 0 12px;
+  color: var(--primary-dark);
 }
 
 a {
@@ -48,9 +62,10 @@ button {
   background: var(--primary);
   color: #fff;
   border: none;
-  padding: 10px 16px;
+  padding: 9px 16px;
   border-radius: var(--radius);
   font-size: .95rem;
+  font-weight: 500;
   cursor: pointer;
   transition: background .15s;
 }
@@ -60,31 +75,56 @@ button:hover {
 }
 
 button:disabled {
-  background: #9ca3af;
+  background: #b6b2a8;
   cursor: not-allowed;
 }
 
-input {
+button.danger {
+  background: var(--danger);
+}
+
+button.danger:hover {
+  background: var(--danger-dark);
+}
+
+input, textarea, select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 9px 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-size: .95rem;
+  font-family: inherit;
   background: #fff;
+  color: var(--text);
 }
 
-input:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: -1px;
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(31, 92, 84, .18);
+}
+
+label {
+  display: block;
+  margin: 12px 0 4px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 20px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
 }
 
 .muted {
@@ -95,4 +135,125 @@ input:focus {
   color: var(--danger);
   margin: 4px 0;
   font-size: .9rem;
+}
+
+/* ---------- Tableaux de données (vue opérationnelle) ---------- */
+.table-wrap {
+  overflow-x: auto;            /* défilement horizontal sur petit écran */
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+table.data {
+  width: 100%;
+  min-width: 560px;            /* en dessous, .table-wrap défile au lieu de rogner */
+  border-collapse: collapse;
+  font-size: .92rem;
+}
+
+table.data thead th {
+  text-align: left;
+  padding: 10px 14px;
+  background: #ebeeec;
+  color: var(--primary-dark);
+  font-size: .76rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+table.data tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+table.data tbody tr:last-child td {
+  border-bottom: none;
+}
+
+table.data tbody tr:hover {
+  background: #f3f1ec;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ---------- Barre d'outils ---------- */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+/* ---------- Tuiles d'accès (tableau de bord) ---------- */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.tile {
+  display: block;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.tile:hover {
+  text-decoration: none;
+  background: #f3f1ec;
+}
+
+.tile small {
+  display: block;
+  margin-top: 4px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .container {
+    padding: 16px 12px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  /* barre de recherche empilée */
+  .search {
+    flex-direction: column;
+  }
+
+  /* navbar qui passe à la ligne au lieu de déborder */
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px 14px;
+    row-gap: 8px;
+  }
+
+  .navbar .right {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
 }

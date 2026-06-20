@@ -52,3 +52,20 @@ INSERT INTO Client (Numero, Nom, Adresse, Ville, CodePostal, Telephone, Latitude
     ('01250', 'Garage Dupont', '5 avenue de la Gare', 'Roubaix', '59100', '0320000002', 50.690000, 3.174000, NULL),
     ('07421', 'Pharmacie Centrale', '8 place du Marche', 'Tourcoing', '59200', '0320000003', 50.723000, 3.161000, 'Acces par l arriere du batiment'),
     ('02009', 'Restaurant Le Nord', '22 boulevard Gambetta', 'Lille', '59000', '0320000004', 50.633000, 3.066000, NULL);
+
+
+-- Table de liaison N-N entre Utilisateur et Client (favoris des chauffeurs)
+CREATE TABLE Favori (
+    UtilisateurId INT NOT NULL,
+    ClientId      INT NOT NULL,
+    PRIMARY KEY (UtilisateurId, ClientId),
+    CONSTRAINT FK_Favori_Utilisateur
+        FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
+    CONSTRAINT FK_Favori_Client
+        FOREIGN KEY (ClientId) REFERENCES Client(Id)
+);
+
+-- Le chauffeur de test (Id = 3) a 2 clients en favori
+INSERT INTO Favori (UtilisateurId, ClientId) VALUES
+    (3, 1),
+    (3, 3);

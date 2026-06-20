@@ -1,6 +1,7 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientApi, Client } from '../../services/api/client';
+import { FavoriApi } from '../../services/api/favori';
 import { AuthState } from '../../services/auth-state';
 
 @Component({
@@ -13,10 +14,12 @@ export class ClientDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private api = inject(ClientApi);
+  private favoriApi = inject(FavoriApi);
   private authState = inject(AuthState);
 
   private id = 0;
   client = signal<Client | null>(null);
+  estFavori = signal(false);
 
   peutModifier(): boolean {
     const role = this.authState.role();
@@ -31,6 +34,16 @@ export class ClientDetail implements OnInit {
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.api.getById(this.id).subscribe(c => this.client.set(c));
+    this.favoriApi.mesFavoris().subscribe(favoris =>
+      this.estFavori.set(favoris.some(c => c.id === this.id)));
+  }
+
+  basculerFavori(): void {
+    if (this.estFavori()) {
+      this.favoriApi.supprimer(this.id).subscribe(() => this.estFavori.set(false));
+    } else {
+      this.favoriApi.ajouter(this.id).subscribe(() => this.estFavori.set(true));
+    }
   }
 
   supprimer(): void {

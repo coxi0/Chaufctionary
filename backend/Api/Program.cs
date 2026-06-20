@@ -47,5 +47,6 @@ app.UseAuthorization();
 app.AddAuthRoutes();
 app.AddClientRoutes();
 app.AddUtilisateurRoutes();
+app.AddFavorisRoutes();
 
 app.Run();

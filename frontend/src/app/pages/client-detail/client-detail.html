@@ -13,6 +13,9 @@
     }
 
     <div class="actions">
+      <button (click)="basculerFavori()">
+        @if (estFavori()) { Retirer des favoris } @else { Ajouter aux favoris }
+      </button>
       @if (peutModifier()) {
         <button [routerLink]="['/clients', c.id, 'modifier']">Modifier</button>
       }

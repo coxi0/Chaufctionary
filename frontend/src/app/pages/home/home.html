@@ -1,6 +1,50 @@
-<h1>Bienvenue sur Chaufctionary</h1>
+<h1>Tableau de bord</h1>
 
-<div class="card">
-  <p>Gérez vos fiches clients de tournée : recherche, consultation et modification.</p>
-  <button routerLink="/clients">Voir les clients</button>
+@if (role(); as r) {
+  <p class="muted">Connecté en tant que <strong>{{ r }}</strong>.</p>
+}
+
+<div class="tiles">
+  <a class="tile" routerLink="/clients">
+    Clients
+    <small>Rechercher et consulter les fiches</small>
+  </a>
+  @if (peutGererUtilisateurs()) {
+    <a class="tile" routerLink="/utilisateurs">
+      Utilisateurs
+      <small>Gérer les comptes</small>
+    </a>
+  }
 </div>
+
+<h2>Mes favoris</h2>
+
+@if (favoris().length > 0) {
+  <div class="table-wrap">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>N° client</th>
+          <th>Nom</th>
+          <th>Ville</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (client of favoris(); track client.id) {
+          <tr>
+            <td class="num">{{ client.numero }}</td>
+            <td>{{ client.nom }}</td>
+            <td>{{ client.ville }}</td>
+            <td class="actions">
+              <a [routerLink]="['/clients', client.id]">Ouvrir</a>
+              <button class="danger" (click)="retirer(client.id)">Retirer</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+} @else {
+  <p class="muted">Aucun client en favori pour le moment.</p>
+}

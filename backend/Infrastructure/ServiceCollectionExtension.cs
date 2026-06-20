@@ -14,6 +14,8 @@ public static class ServiceCollectionExtension
         services.AddTransient<IUserGateway, UserGateway>();
         services.AddTransient<IClientRepository, ClientRepository>();
         services.AddTransient<IClientGateway, ClientGateway>();
+        services.AddTransient<IFavoriRepository, FavoriRepository>();
+        services.AddTransient<IFavoriGateway, FavoriGateway>();
         return services;
     }
 }
