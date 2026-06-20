@@ -9,6 +9,19 @@ Application de gestion de fiches clients pour une activité de tournées
 
 ---
 
+## Fonctionnalités principales
+
+- **Authentification JWT** avec 3 rôles (Chauffeur / Planneur / Admin) et routes protégées.
+- **Consultation des clients** : liste filtrable en direct, fiche détaillée, lien
+  **Google Maps** à partir des coordonnées GPS.
+- **CRUD client** (création / modification / suppression) réservé aux Planneur et Admin.
+- **Gestion des utilisateurs** hiérarchique (un Planneur crée des Chauffeurs ; un Admin
+  crée Chauffeurs et Planneurs).
+- **Favoris** : chaque utilisateur gère ses clients favoris, affichés sur son tableau de bord.
+- Interface **responsive** (tableaux défilables sur mobile, navigation adaptative).
+
+---
+
 ## 1. Prérequis
 
 Versions utilisées pour le développement (à installer au minimum à l'identique) :

@@ -6,7 +6,15 @@
     <p class="muted">Numéro client externe : {{ c.numero }}</p>
     <p>{{ c.adresse }}, {{ c.codePostal }} {{ c.ville }}</p>
     <p class="muted">Téléphone : {{ c.telephone }}</p>
-    <p class="muted">GPS : {{ c.latitude }}, {{ c.longitude }}</p>
+    @if (c.latitude && c.longitude) {
+      <p class="muted">
+        GPS : {{ c.latitude }}, {{ c.longitude }}
+        — <a [href]="'https://www.google.com/maps?q=' + c.latitude + ',' + c.longitude"
+             target="_blank" rel="noopener">Voir sur Google Maps</a>
+      </p>
+    } @else {
+      <p class="muted">GPS non renseigné</p>
+    }
 
     @if (c.notes) {
       <p class="muted">Notes : {{ c.notes }}</p>
