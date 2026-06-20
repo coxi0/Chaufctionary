@@ -17,6 +17,7 @@ export class ClientEdit implements OnInit {
 
   id = 0;
   erreur = signal<string | null>(null);
+  proposition = signal<string | null>(null);
 
   form = this.fb.nonNullable.group({
     numero: ['', Validators.required],
@@ -27,13 +28,21 @@ export class ClientEdit implements OnInit {
     telephone: [''],
     latitude: [0],
     longitude: [0],
-    notes: ['']
+    notes: [''],
+    conseilAcces: ['']
   });
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
+    // Proposition transmise par la page Demandes (query param), pour comparaison.
+    this.proposition.set(this.route.snapshot.queryParamMap.get('proposition'));
     this.api.getById(this.id).subscribe(c =>
-      this.form.patchValue({ ...c, notes: c.notes ?? '' }));
+      this.form.patchValue({ ...c, notes: c.notes ?? '', conseilAcces: c.conseilAcces ?? '' }));
+  }
+
+  appliquerProposition(): void {
+    const p = this.proposition();
+    if (p !== null) this.form.patchValue({ conseilAcces: p });
   }
 
   onSubmit(): void {

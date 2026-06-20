@@ -12,4 +12,5 @@ public class Client
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
     public string? Notes { get; set; }
+    public string? ConseilAcces { get; set; }
 }

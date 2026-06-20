@@ -20,6 +20,10 @@
       <p class="muted">Notes : {{ c.notes }}</p>
     }
 
+    @if (c.conseilAcces) {
+      <p class="muted">Conseil d'accès : {{ c.conseilAcces }}</p>
+    }
+
     <div class="actions">
       <button (click)="basculerFavori()">
         @if (estFavori()) { Retirer des favoris } @else { Ajouter aux favoris }
@@ -32,6 +36,23 @@
       }
     </div>
   </div>
+
+  @if (peutDemander()) {
+    <div class="card">
+      <h2>Proposer une modification du conseil d'accès</h2>
+      @if (demandeEnvoyee()) {
+        <p class="muted">Votre proposition a été transmise au planneur.</p>
+      }
+      <label>Conseil d'accès proposé</label>
+      <textarea [(ngModel)]="messageDemande" rows="3"
+                placeholder="Ex : entrer en marche avant, se garer devant, repartir en marche arrière"></textarea>
+      <p>
+        <button (click)="envoyerDemande()" [disabled]="messageDemande.trim() === ''">
+          Envoyer la proposition
+        </button>
+      </p>
+    </div>
+  }
 } @else {
   <p>Chargement...</p>
 }

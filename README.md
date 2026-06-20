@@ -18,6 +18,10 @@ Application de gestion de fiches clients pour une activité de tournées
 - **Gestion des utilisateurs** hiérarchique (un Planneur crée des Chauffeurs ; un Admin
   crée Chauffeurs et Planneurs).
 - **Favoris** : chaque utilisateur gère ses clients favoris, affichés sur son tableau de bord.
+- **Conseil d'accès** par client (consignes de livraison / stationnement), distinct des notes.
+- **Demandes de modification d'accès** : un chauffeur propose un nouveau conseil d'accès ;
+  le planneur (ou l'admin) compare l'accès actuel à la proposition, puis **modifie** la
+  fiche manuellement ou **refuse** la demande.
 - Interface **responsive** (tableaux défilables sur mobile, navigation adaptative).
 
 ---

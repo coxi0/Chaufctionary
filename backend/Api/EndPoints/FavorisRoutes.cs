@@ -7,7 +7,6 @@ public static class FavorisRoutes
 {
     public static WebApplication AddFavorisRoutes(this WebApplication app)
     {
-        // Tout utilisateur connecté gère SES propres favoris (acteur principal : le chauffeur).
         var group = app.MapGroup("api/favoris")
             .RequireAuthorization()
             .WithTags("Favoris");
@@ -36,7 +35,6 @@ public static class FavorisRoutes
         return app;
     }
 
-    // Lit l'identifiant de l'utilisateur connecté depuis le JWT (claim NameIdentifier).
     private static int GetUtilisateurId(HttpContext httpContext)
     {
         var valeur = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);

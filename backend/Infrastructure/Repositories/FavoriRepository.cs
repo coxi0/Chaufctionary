@@ -31,7 +31,6 @@ public class FavoriRepository : IFavoriRepository
 
     public bool Ajouter(int utilisateurId, int clientId)
     {
-        // INSERT IGNORE : si le favori existe déjà (clé primaire composite), on ne lève pas d'erreur.
         const string sql = @"INSERT IGNORE INTO Favori (UtilisateurId, ClientId)
                              VALUES (@UtilisateurId, @ClientId);";
         using var connection = CreateConnection();

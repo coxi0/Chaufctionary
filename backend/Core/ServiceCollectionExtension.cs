@@ -11,6 +11,7 @@ public static class ServiceCollectionExtension
         services.AddTransient<IUserUseCases, UserUseCases>();
         services.AddTransient<IClientUseCases, ClientUseCases>();
         services.AddTransient<IFavoriUseCases, FavoriUseCases>();
+        services.AddTransient<IDemandeUseCases, DemandeUseCases>();
         return services;
     }
 }

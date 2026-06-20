@@ -1,0 +1,42 @@
+<h1>Demandes de modification d'accès</h1>
+
+@if (estGestionnaire()) {
+  <p class="muted">Propositions d'accès soumises par les chauffeurs.</p>
+} @else {
+  <p class="muted">Vos propositions de modification d'accès en attente.</p>
+}
+
+@if (demandes().length === 0) {
+  <p class="muted">Aucune demande.</p>
+} @else {
+  <div class="table-wrap">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Client</th>
+          @if (estGestionnaire()) { <th>Chauffeur</th> }
+          <th>Accès actuel</th>
+          <th>Proposition</th>
+          @if (estGestionnaire()) { <th></th> }
+        </tr>
+      </thead>
+      <tbody>
+        @for (d of demandes(); track d.id) {
+          <tr>
+            <td><a [routerLink]="['/clients', d.clientId]">{{ d.clientNom }}</a></td>
+            @if (estGestionnaire()) { <td>{{ d.chauffeurNom }}</td> }
+            <td class="muted">{{ d.conseilActuel || '(aucun)' }}</td>
+            <td>{{ d.message }}</td>
+            @if (estGestionnaire()) {
+              <td class="actions">
+                <a [routerLink]="['/clients', d.clientId, 'modifier']"
+                   [queryParams]="{ proposition: d.message }">Modifier</a>
+                <button class="danger" (click)="refuser(d.id)">Refuser</button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

@@ -42,16 +42,17 @@ CREATE TABLE Client (
     Ville      VARCHAR(100) NOT NULL,
     CodePostal VARCHAR(10) NOT NULL,
     Telephone  VARCHAR(20),
-    Latitude   DECIMAL(9,6),
-    Longitude  DECIMAL(9,6),
-    Notes      TEXT
+    Latitude     DECIMAL(9,6),
+    Longitude    DECIMAL(9,6),
+    Notes        TEXT,
+    ConseilAcces TEXT
 );
 
-INSERT INTO Client (Numero, Nom, Adresse, Ville, CodePostal, Telephone, Latitude, Longitude, Notes) VALUES
-    ('03884', 'Boulangerie Martin', '12 rue des Lilas', 'Lille', '59000', '0320000001', 50.629250, 3.057256, 'LIV de 6 a 11, prendre les temperatures et demander M. Martin'),
-    ('01250', 'Garage Dupont', '5 avenue de la Gare', 'Roubaix', '59100', '0320000002', 50.690000, 3.174000, NULL),
-    ('07421', 'Pharmacie Centrale', '8 place du Marche', 'Tourcoing', '59200', '0320000003', 50.723000, 3.161000, 'Acces par l arriere du batiment'),
-    ('02009', 'Restaurant Le Nord', '22 boulevard Gambetta', 'Lille', '59000', '0320000004', 50.633000, 3.066000, NULL);
+INSERT INTO Client (Numero, Nom, Adresse, Ville, CodePostal, Telephone, Latitude, Longitude, Notes, ConseilAcces) VALUES
+    ('03884', 'Boulangerie Martin', '12 rue des Lilas', 'Lille', '59000', '0320000001', 50.629250, 3.057256, 'LIV de 6 a 11, prendre les temperatures et demander M. Martin', 'Entrer en marche avant par la rue des Lilas, se garer devant le n12, repartir en marche arriere vers la place'),
+    ('01250', 'Garage Dupont', '5 avenue de la Gare', 'Roubaix', '59100', '0320000002', 50.690000, 3.174000, NULL, NULL),
+    ('07421', 'Pharmacie Centrale', '8 place du Marche', 'Tourcoing', '59200', '0320000003', 50.723000, 3.161000, 'Acces par l arriere du batiment', 'Livraison par la cour arriere, sonner a l interphone PRO'),
+    ('02009', 'Restaurant Le Nord', '22 boulevard Gambetta', 'Lille', '59000', '0320000004', 50.633000, 3.066000, NULL, NULL);
 
 
 -- Table de liaison N-N entre Utilisateur et Client (favoris des chauffeurs)
@@ -69,3 +70,22 @@ CREATE TABLE Favori (
 INSERT INTO Favori (UtilisateurId, ClientId) VALUES
     (3, 1),
     (3, 3);
+
+
+-- Demandes de modification du CONSEIL D'ACCES, soumises par les chauffeurs,
+-- traitees par les planneurs (qui modifient la fiche puis suppriment la demande).
+CREATE TABLE DemandeModification (
+    Id            INT AUTO_INCREMENT PRIMARY KEY,
+    ClientId      INT NOT NULL,
+    UtilisateurId INT NOT NULL,
+    Message       TEXT NOT NULL,                 -- proposition de nouveau conseil d'acces
+    DateCreation  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FK_Demande_Client
+        FOREIGN KEY (ClientId) REFERENCES Client(Id),
+    CONSTRAINT FK_Demande_Utilisateur
+        FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id)
+);
+
+-- Une demande de test (chauffeur 3 propose un nouvel acces pour le client 1)
+INSERT INTO DemandeModification (ClientId, UtilisateurId, Message) VALUES
+    (1, 3, 'Acces modifie : entrer par la rue laterale, se garer cote livraison, repartir en marche arriere');

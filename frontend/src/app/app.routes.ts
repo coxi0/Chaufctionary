@@ -8,6 +8,7 @@ import { ClientNew } from './pages/client-new/client-new';
 import { UserNew } from './pages/user-new/user-new';
 import { Users } from './pages/users/users';
 import { UserEdit } from './pages/user-edit/user-edit';
+import { Demandes } from './pages/demandes/demandes';
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
@@ -20,4 +21,5 @@ export const routes: Routes = [
   { path: 'utilisateurs', component: Users, canActivate: [authGuard] },
   { path: 'utilisateurs/nouveau', component: UserNew, canActivate: [authGuard] },
   { path: 'utilisateurs/:id/modifier', component: UserEdit, canActivate: [authGuard] },
+  { path: 'demandes', component: Demandes, canActivate: [authGuard] },
 ];

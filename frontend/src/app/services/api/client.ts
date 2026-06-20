@@ -14,6 +14,7 @@ export interface Client {
   latitude: number;
   longitude: number;
   notes: string | null;
+  conseilAcces: string | null;
 }
 
 @Injectable({ providedIn: 'root' })

@@ -36,6 +36,24 @@
   <label>Notes</label>
   <textarea formControlName="notes" rows="4"></textarea>
 
+  <label>Conseil d'accès</label>
+  @if (proposition(); as p) {
+    <div class="comparaison">
+      <div class="col">
+        <span class="sub">Accès actuel (modifiable)</span>
+        <textarea formControlName="conseilAcces" rows="5"></textarea>
+      </div>
+      <div class="col">
+        <span class="sub">Proposition du chauffeur</span>
+        <div class="propo">{{ p }}</div>
+        <button type="button" (click)="appliquerProposition()">Utiliser cette proposition</button>
+      </div>
+    </div>
+  } @else {
+    <textarea formControlName="conseilAcces" rows="4"
+              placeholder="Ex : entrer en marche avant, se garer devant, repartir en marche arrière..."></textarea>
+  }
+
   @if (erreur()) {
     <p class="erreur">{{ erreur() }}</p>
   }

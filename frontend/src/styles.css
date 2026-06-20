@@ -137,9 +137,8 @@ label {
   font-size: .9rem;
 }
 
-/* ---------- Tableaux de données (vue opérationnelle) ---------- */
 .table-wrap {
-  overflow-x: auto;            /* défilement horizontal sur petit écran */
+  overflow-x: auto;            
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
@@ -147,7 +146,7 @@ label {
 
 table.data {
   width: 100%;
-  min-width: 560px;            /* en dessous, .table-wrap défile au lieu de rogner */
+  min-width: 560px;            
   border-collapse: collapse;
   font-size: .92rem;
 }
@@ -167,6 +166,7 @@ table.data thead th {
 table.data tbody td {
   padding: 10px 14px;
   border-bottom: 1px solid var(--border);
+  vertical-align: middle;
 }
 
 table.data tbody tr:last-child td {
@@ -187,9 +187,14 @@ table.data tbody tr:hover {
   display: flex;
   gap: 10px;
   align-items: center;
+  white-space: nowrap;
 }
 
-/* ---------- Barre d'outils ---------- */
+table.data .actions button {
+  padding: 5px 12px;
+  font-size: .85rem;
+}
+
 .toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -198,7 +203,6 @@ table.data tbody tr:hover {
   margin-bottom: 18px;
 }
 
-/* ---------- Tuiles d'accès (tableau de bord) ---------- */
 .tiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -228,7 +232,6 @@ table.data tbody tr:hover {
   color: var(--muted);
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 640px) {
   .container {
     padding: 16px 12px;
@@ -238,12 +241,10 @@ table.data tbody tr:hover {
     font-size: 1.3rem;
   }
 
-  /* barre de recherche empilée */
   .search {
     flex-direction: column;
   }
 
-  /* navbar qui passe à la ligne au lieu de déborder */
   .navbar {
     flex-wrap: wrap;
     height: auto;

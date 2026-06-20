@@ -36,6 +36,10 @@
   <label>Notes</label>
   <textarea formControlName="notes" rows="4"></textarea>
 
+  <label>Conseil d'accès</label>
+  <textarea formControlName="conseilAcces" rows="4"
+            placeholder="Ex : entrer en marche avant, se garer devant, repartir en marche arrière..."></textarea>
+
   @if (erreur()) {
     <p class="erreur">{{ erreur() }}</p>
   }

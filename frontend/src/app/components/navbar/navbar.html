@@ -1,10 +1,11 @@
 <nav class="navbar">
-  <a class="brand" routerLink="/">🚚 Chaufctionary</a>
+  <a class="brand" routerLink="/">Chaufctionary</a>
 
   @if (estConnecte()) {
     <div class="links">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
       <a routerLink="/clients" routerLinkActive="active">Clients</a>
+      <a routerLink="/demandes" routerLinkActive="active">Demandes</a>
       @if (peutGererUtilisateurs()) {
         <a routerLink="/utilisateurs" routerLinkActive="active">Utilisateurs</a>
       }

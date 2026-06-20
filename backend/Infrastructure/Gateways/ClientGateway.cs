@@ -62,7 +62,8 @@ public class ClientGateway : IClientGateway
             Telephone = c.Telephone,
             Latitude = c.Latitude,
             Longitude = c.Longitude,
-            Notes = c.Notes
+            Notes = c.Notes,
+            ConseilAcces = c.ConseilAcces
         };
     }
 
@@ -79,7 +80,8 @@ public class ClientGateway : IClientGateway
             Telephone = c.Telephone,
             Latitude = c.Latitude,
             Longitude = c.Longitude,
-            Notes = c.Notes
+            Notes = c.Notes,
+            ConseilAcces = c.ConseilAcces
         };
     }
 }
