@@ -3,6 +3,7 @@ namespace Infrastructure.Models;
 public class Client
 {
     public int Id { get; set; }
+    public string Numero { get; set; } = string.Empty;
     public string Nom { get; set; } = string.Empty;
     public string Adresse { get; set; } = string.Empty;
     public string Ville { get; set; } = string.Empty;
@@ -10,4 +11,5 @@ public class Client
     public string Telephone { get; set; } = string.Empty;
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
+    public string? Notes { get; set; }
 }

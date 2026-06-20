@@ -19,18 +19,21 @@ export class ClientEdit implements OnInit {
   erreur = signal<string | null>(null);
 
   form = this.fb.nonNullable.group({
+    numero: ['', Validators.required],
     nom: ['', Validators.required],
     adresse: [''],
     ville: [''],
     codePostal: [''],
     telephone: [''],
     latitude: [0],
-    longitude: [0]
+    longitude: [0],
+    notes: ['']
   });
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.api.getById(this.id).subscribe(c => this.form.patchValue(c));
+    this.api.getById(this.id).subscribe(c =>
+      this.form.patchValue({ ...c, notes: c.notes ?? '' }));
   }
 
   onSubmit(): void {

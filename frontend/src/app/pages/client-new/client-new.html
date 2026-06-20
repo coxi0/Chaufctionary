@@ -3,6 +3,12 @@
 <h1>Nouveau client</h1>
 
 <form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>Numéro client externe</label>
+  <input formControlName="numero" />
+  @if (form.controls.numero.invalid && form.controls.numero.touched) {
+    <p class="erreur">Le numéro est obligatoire.</p>
+  }
+
   <label>Nom</label>
   <input formControlName="nom" />
   @if (form.controls.nom.invalid && form.controls.nom.touched) {
@@ -26,6 +32,9 @@
 
   <label>Longitude</label>
   <input type="number" formControlName="longitude" />
+
+  <label>Notes</label>
+  <textarea formControlName="notes" rows="4"></textarea>
 
   @if (erreur()) {
     <p class="erreur">{{ erreur() }}</p>

@@ -54,13 +54,15 @@ public class ClientGateway : IClientGateway
         return new Infrastructure.Models.Client
         {
             Id = c.Id,
+            Numero = c.Numero,
             Nom = c.Nom,
             Adresse = c.Adresse,
             Ville = c.Ville,
             CodePostal = c.CodePostal,
             Telephone = c.Telephone,
             Latitude = c.Latitude,
-            Longitude = c.Longitude
+            Longitude = c.Longitude,
+            Notes = c.Notes
         };
     }
 
@@ -69,13 +71,15 @@ public class ClientGateway : IClientGateway
         return new Core.Models.Client
         {
             Id = c.Id,
+            Numero = c.Numero,
             Nom = c.Nom,
             Adresse = c.Adresse,
             Ville = c.Ville,
             CodePostal = c.CodePostal,
             Telephone = c.Telephone,
             Latitude = c.Latitude,
-            Longitude = c.Longitude
+            Longitude = c.Longitude,
+            Notes = c.Notes
         };
     }
 }

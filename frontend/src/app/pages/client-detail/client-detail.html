@@ -3,9 +3,14 @@
 @if (client(); as c) {
   <div class="card detail">
     <h1>{{ c.nom }}</h1>
+    <p class="muted">Numéro client externe : {{ c.numero }}</p>
     <p>{{ c.adresse }}, {{ c.codePostal }} {{ c.ville }}</p>
     <p class="muted">Téléphone : {{ c.telephone }}</p>
     <p class="muted">GPS : {{ c.latitude }}, {{ c.longitude }}</p>
+
+    @if (c.notes) {
+      <p class="muted">Notes : {{ c.notes }}</p>
+    }
 
     <div class="actions">
       @if (peutModifier()) {

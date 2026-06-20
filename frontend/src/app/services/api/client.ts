@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 
 export interface Client {
   id: number;
+  numero: string;
   nom: string;
   adresse: string;
   ville: string;
@@ -12,6 +13,7 @@ export interface Client {
   telephone: string;
   latitude: number;
   longitude: number;
+  notes: string | null;
 }
 
 @Injectable({ providedIn: 'root' })

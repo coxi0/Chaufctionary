@@ -17,13 +17,15 @@ export class ClientNew {
   erreur = signal<string | null>(null);
 
   form = this.fb.nonNullable.group({
+    numero: ['', Validators.required],
     nom: ['', Validators.required],
     adresse: [''],
     ville: [''],
     codePostal: [''],
     telephone: [''],
     latitude: [0],
-    longitude: [0]
+    longitude: [0],
+    notes: ['']
   });
 
   onSubmit(): void {
