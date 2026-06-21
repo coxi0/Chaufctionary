@@ -33,8 +33,9 @@ Application de gestion de fiches clients pour une activité de tournées
 ```
 backend/  Api  →  Core  ←  Infrastructure
           (EndPoints,     (Models, UseCases,   (Repositories Dapper,
-           middleware,     IGateways —          Gateways, db.sql —
+           middleware,     IGateways —          Gateways —
            JWT, CORS)      aucune dépendance)   dépend de Core)
+database/ schema.sql + seed.sql  (création des tables, puis peuplement)
 frontend/ src/app  (pages, components, services, guards, interceptors)
 ```
 
@@ -62,19 +63,24 @@ Versions utilisées pour le développement (à installer au minimum à l'identiq
 
 ## 2. Installation de la base de données
 
-Le script SQL unique se trouve dans [`backend/Infrastructure/db.sql`](backend/Infrastructure/db.sql).
-Il crée la base `chaufctionary`, les tables (parent avant enfant) puis insère
-les données de test (rôles, 3 comptes utilisateurs, clients de démonstration).
+Les scripts SQL se trouvent dans le dossier [`database/`](database/), séparés en deux
+fichiers à exécuter **dans cet ordre** :
+
+1. [`database/schema.sql`](database/schema.sql) — crée la base `chaufctionary` et les
+   tables (parent avant enfant).
+2. [`database/seed.sql`](database/seed.sql) — peuple la base avec les données de test
+   (rôles, 3 comptes utilisateurs, clients de démonstration, favoris, demande).
 
 Depuis un terminal, à la racine du projet :
 
 ```bash
-mysql -u root -p < backend/Infrastructure/db.sql
+mysql -u root -p < database/schema.sql
+mysql -u root -p < database/seed.sql
 ```
 
-> ⚠️ Le script commence par `DROP DATABASE IF EXISTS chaufctionary` : il **réinitialise
+> ⚠️ `schema.sql` commence par `DROP DATABASE IF EXISTS chaufctionary` : il **réinitialise
 > entièrement** la base à chaque exécution (pratique pour repartir propre, mais toute
-> donnée saisie manuellement est perdue).
+> donnée saisie manuellement est perdue). Rejouez ensuite `seed.sql` pour repeupler.
 
 ---
 
@@ -164,7 +170,8 @@ Chaufctionary/
 │   ├── Api.slnx
 │   ├── Api/             ← Program.cs, EndPoints (Minimal API), appsettings.json
 │   ├── Core/            ← Models, IGateways, UseCases (règles métier) — ne dépend de rien
-│   └── Infrastructure/  ← Gateways (mapping), Repositories (Dapper/SQL), db.sql
+│   └── Infrastructure/  ← Gateways (mapping), Repositories (Dapper/SQL)
+├── database/            ← schema.sql (tables) + seed.sql (données de test)
 └── frontend/
     └── src/app/         ← pages/, components/, services/, guards/, interceptors/
 ```
