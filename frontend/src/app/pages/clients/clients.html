@@ -1,5 +1,9 @@
 <h1>Clients</h1>
 
+@if (erreur()) {
+  <p class="erreur">{{ erreur() }}</p>
+}
+
 <div class="search">
   <input [(ngModel)]="recherche" (ngModelChange)="charger()" placeholder="Rechercher par nom ou ville..." />
   <button (click)="charger()">Rechercher</button>

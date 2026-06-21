@@ -14,13 +14,17 @@ export class Users implements OnInit {
   private authState = inject(AuthState);
 
   utilisateurs = signal<Utilisateur[]>([]);
+  erreur = signal<string | null>(null);
 
   ngOnInit(): void {
     this.charger();
   }
 
   charger(): void {
-    this.api.lister().subscribe(data => this.utilisateurs.set(data));
+    this.api.lister().subscribe({
+      next: data => { this.utilisateurs.set(data); this.erreur.set(null); },
+      error: () => this.erreur.set('Impossible de charger les utilisateurs.')
+    });
   }
 
   peutGerer(u: Utilisateur): boolean {

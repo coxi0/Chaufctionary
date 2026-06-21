@@ -14,6 +14,7 @@ export class Demandes implements OnInit {
   private authState = inject(AuthState);
 
   demandes = signal<Demande[]>([]);
+  erreur = signal<string | null>(null);
 
   estGestionnaire(): boolean {
     const role = this.authState.role();
@@ -28,7 +29,10 @@ export class Demandes implements OnInit {
     const source = this.estGestionnaire()
       ? this.demandeApi.toutes()
       : this.demandeApi.mesDemandes();
-    source.subscribe(d => this.demandes.set(d));
+    source.subscribe({
+      next: d => { this.demandes.set(d); this.erreur.set(null); },
+      error: () => this.erreur.set('Impossible de charger les demandes.')
+    });
   }
 
   refuser(id: number): void {

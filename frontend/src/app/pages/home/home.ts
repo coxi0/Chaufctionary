@@ -15,6 +15,7 @@ export class Home implements OnInit {
   private authState = inject(AuthState);
 
   favoris = signal<Client[]>([]);
+  erreur = signal<string | null>(null);
 
   role(): string | null {
     return this.authState.role();
@@ -26,7 +27,10 @@ export class Home implements OnInit {
   }
 
   ngOnInit(): void {
-    this.favoriApi.mesFavoris().subscribe(f => this.favoris.set(f));
+    this.favoriApi.mesFavoris().subscribe({
+      next: f => this.favoris.set(f),
+      error: () => this.erreur.set('Impossible de charger vos favoris.')
+    });
   }
 
   retirer(clientId: number): void {

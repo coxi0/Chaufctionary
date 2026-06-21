@@ -53,6 +53,8 @@
       </p>
     </div>
   }
+} @else if (erreur()) {
+  <p class="erreur">{{ erreur() }}</p>
 } @else {
   <p>Chargement...</p>
 }

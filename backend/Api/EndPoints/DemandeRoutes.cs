@@ -22,15 +22,8 @@ public static class DemandeRoutes
                 Message = request.Message
             };
 
-            try
-            {
-                var creee = demandeUseCases.Creer(demande);
-                return Results.Created($"/api/demandes/{creee.Id}", creee);
-            }
-            catch (ArgumentException ex)
-            {
-                return Results.BadRequest(new { erreur = ex.Message });
-            }
+            var creee = demandeUseCases.Creer(demande);
+            return Results.Created($"/api/demandes/{creee.Id}", creee);
         });
 
         group.MapGet("mes", (IDemandeUseCases demandeUseCases, HttpContext httpContext) =>

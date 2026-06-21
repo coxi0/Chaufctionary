@@ -15,6 +15,7 @@ export class Clients implements OnInit {
   private authState = inject(AuthState);
 
   clients = signal<Client[]>([]);
+  erreur = signal<string | null>(null);
   recherche = '';
 
   peutCreer(): boolean {
@@ -27,6 +28,9 @@ export class Clients implements OnInit {
   }
 
   charger(): void {
-    this.api.rechercher(this.recherche).subscribe(data => this.clients.set(data));
+    this.api.rechercher(this.recherche).subscribe({
+      next: data => { this.clients.set(data); this.erreur.set(null); },
+      error: () => this.erreur.set('Impossible de charger les clients.')
+    });
   }
 }

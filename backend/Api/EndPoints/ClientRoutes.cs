@@ -25,30 +25,16 @@ public static class ClientRoutes
 
         group.MapPost("", (Client client, IClientUseCases clientUseCases) =>
         {
-            try
-            {
-                var cree = clientUseCases.Creer(client);
-                return Results.Created($"/api/clients/{cree.Id}", cree);
-            }
-            catch (ArgumentException ex)
-            {
-                return Results.BadRequest(new { erreur = ex.Message });
-            }
+            var cree = clientUseCases.Creer(client);
+            return Results.Created($"/api/clients/{cree.Id}", cree);
         })
         .RequireAuthorization(policy => policy.RequireRole("Planneur", "Admin"));
 
         group.MapPut("{id:int}", (int id, Client client, IClientUseCases clientUseCases) =>
         {
-            client.Id = id; 
-            try
-            {
-                var modifie = clientUseCases.Modifier(client);
-                return modifie is null ? Results.NotFound() : Results.Ok(modifie);
-            }
-            catch (ArgumentException ex)
-            {
-                return Results.BadRequest(new { erreur = ex.Message });
-            }
+            client.Id = id;
+            var modifie = clientUseCases.Modifier(client);
+            return modifie is null ? Results.NotFound() : Results.Ok(modifie);
         })
         .RequireAuthorization(policy => policy.RequireRole("Planneur", "Admin"));
 

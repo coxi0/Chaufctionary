@@ -42,6 +42,13 @@ public class ClientRepository : IClientRepository
         return connection.QuerySingleOrDefault<Client>(sql, new { Id = id });
     }
 
+    public Client? GetByNumero(string numero)
+    {
+        const string sql = "SELECT Id, Numero, Nom, Adresse, Ville, CodePostal, Telephone, Latitude, Longitude, Notes, ConseilAcces FROM Client WHERE Numero = @Numero;";
+        using var connection = CreateConnection();
+        return connection.QuerySingleOrDefault<Client>(sql, new { Numero = numero });
+    }
+
 
     public Client Creer(Client client)
     {

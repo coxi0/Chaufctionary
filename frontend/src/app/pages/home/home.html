@@ -19,6 +19,10 @@
 
 <h2>Mes favoris</h2>
 
+@if (erreur()) {
+  <p class="erreur">{{ erreur() }}</p>
+}
+
 @if (favoris().length > 0) {
   <div class="table-wrap">
     <table class="data">

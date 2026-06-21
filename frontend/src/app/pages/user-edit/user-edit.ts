@@ -37,7 +37,10 @@ export class UserEdit implements OnInit {
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.api.getById(this.id).subscribe(u => this.form.patchValue(u));
+    this.api.getById(this.id).subscribe({
+      next: u => this.form.patchValue(u),
+      error: () => this.erreur.set('Impossible de charger l\'utilisateur.')
+    });
   }
 
   onSubmit(): void {

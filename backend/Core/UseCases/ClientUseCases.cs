@@ -36,6 +36,9 @@ public class ClientUseCases : IClientUseCases
         if (string.IsNullOrWhiteSpace(client.Nom))
             throw new ArgumentException("Le nom du client est obligatoire.");
 
+        if (_clientGateway.GetByNumero(client.Numero) is not null)
+            throw new ArgumentException("Ce numéro client est déjà utilisé.");
+
         return _clientGateway.Creer(client);
     }
 
@@ -47,6 +50,10 @@ public class ClientUseCases : IClientUseCases
         var existant = _clientGateway.GetById(client.Id);
         if (existant is null)
             return null;
+
+        var memeNumero = _clientGateway.GetByNumero(client.Numero);
+        if (memeNumero is not null && memeNumero.Id != client.Id)
+            throw new ArgumentException("Ce numéro client est déjà utilisé.");
 
         return _clientGateway.Modifier(client);
     }

@@ -1,5 +1,6 @@
 using System.Text;
 using Api.EndPoints;
+using Api.Middleware;
 using Api.Services;
 using Core;
 using Infrastructure;
@@ -39,6 +40,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseCors("AllowAngular");
 app.UseAuthentication();

@@ -1,5 +1,9 @@
 <h1>Demandes de modification d'accès</h1>
 
+@if (erreur()) {
+  <p class="erreur">{{ erreur() }}</p>
+}
+
 @if (estGestionnaire()) {
   <p class="muted">Propositions d'accès soumises par les chauffeurs.</p>
 } @else {

@@ -1,5 +1,9 @@
 <h1>Utilisateurs</h1>
 
+@if (erreur()) {
+  <p class="erreur">{{ erreur() }}</p>
+}
+
 <p><button routerLink="/utilisateurs/nouveau">+ Nouvel utilisateur</button></p>
 
 @if (utilisateurs().length === 0) {

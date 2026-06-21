@@ -45,6 +45,9 @@ public class UserUseCases : IUserUseCases
         if (!RolesGerables(roleGestionnaire).Contains(utilisateur.RoleId))
             throw new ArgumentException("Vous n'avez pas le droit de créer ce rôle.");
 
+        if (_userGateway.GetByEmail(utilisateur.Email) is not null)
+            throw new ArgumentException("Cet email est déjà utilisé.");
+
         utilisateur.MotDePasse = BCrypt.Net.BCrypt.HashPassword(utilisateur.MotDePasse);
         utilisateur.EstActif = true;
         _userGateway.Add(utilisateur);

@@ -38,15 +38,8 @@ public static class UtilisateurRoutes
                 RoleId = request.RoleId
             };
 
-            try
-            {
-                userUseCases.CreerUtilisateur(utilisateur, roleGestionnaire);
-                return Results.Created();
-            }
-            catch (ArgumentException ex)
-            {
-                return Results.BadRequest(new { erreur = ex.Message });
-            }
+            userUseCases.CreerUtilisateur(utilisateur, roleGestionnaire);
+            return Results.Created();
         });
 
         group.MapPut("{id:int}", (int id, ModifierUtilisateurRequest request, IUserUseCases userUseCases, HttpContext httpContext) =>
@@ -63,30 +56,16 @@ public static class UtilisateurRoutes
                 RoleId = request.RoleId
             };
 
-            try
-            {
-                var ok = userUseCases.ModifierUtilisateur(utilisateur, roleGestionnaire);
-                return ok ? Results.NoContent() : Results.NotFound();
-            }
-            catch (ArgumentException ex)
-            {
-                return Results.BadRequest(new { erreur = ex.Message });
-            }
+            var ok = userUseCases.ModifierUtilisateur(utilisateur, roleGestionnaire);
+            return ok ? Results.NoContent() : Results.NotFound();
         });
 
         group.MapDelete("{id:int}", (int id, IUserUseCases userUseCases, HttpContext httpContext) =>
         {
             var roleGestionnaire = httpContext.User.FindFirstValue(ClaimTypes.Role);
 
-            try
-            {
-                var ok = userUseCases.SupprimerUtilisateur(id, roleGestionnaire);
-                return ok ? Results.NoContent() : Results.NotFound();
-            }
-            catch (ArgumentException ex)
-            {
-                return Results.BadRequest(new { erreur = ex.Message });
-            }
+            var ok = userUseCases.SupprimerUtilisateur(id, roleGestionnaire);
+            return ok ? Results.NoContent() : Results.NotFound();
         });
 
         return app;

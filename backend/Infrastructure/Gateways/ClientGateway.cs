@@ -28,6 +28,12 @@ public class ClientGateway : IClientGateway
         return infra is null ? null : Map(infra);
     }
 
+    public Core.Models.Client? GetByNumero(string numero)
+    {
+        var infra = _clientRepository.GetByNumero(numero);
+        return infra is null ? null : Map(infra);
+    }
+
     public Core.Models.Client Creer(Core.Models.Client client)
     {
         var infra = MapToInfra(client);

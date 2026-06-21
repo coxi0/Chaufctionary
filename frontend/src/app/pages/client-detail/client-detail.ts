@@ -23,6 +23,7 @@ export class ClientDetail implements OnInit {
   private id = 0;
   client = signal<Client | null>(null);
   estFavori = signal(false);
+  erreur = signal<string | null>(null);
 
   messageDemande = '';
   demandeEnvoyee = signal(false);
@@ -51,9 +52,12 @@ export class ClientDetail implements OnInit {
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.api.getById(this.id).subscribe(c => {
-      this.client.set(c);
-      this.messageDemande = c.conseilAcces ?? '';
+    this.api.getById(this.id).subscribe({
+      next: c => {
+        this.client.set(c);
+        this.messageDemande = c.conseilAcces ?? '';
+      },
+      error: () => this.erreur.set('Impossible de charger la fiche client.')
     });
     this.favoriApi.mesFavoris().subscribe(favoris =>
       this.estFavori.set(favoris.some(c => c.id === this.id)));
