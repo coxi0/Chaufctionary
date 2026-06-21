@@ -23,6 +23,24 @@ Application de gestion de fiches clients pour une activité de tournées
   le planneur (ou l'admin) compare l'accès actuel à la proposition, puis **modifie** la
   fiche manuellement ou **refuse** la demande.
 - Interface **responsive** (tableaux défilables sur mobile, navigation adaptative).
+- **Gestion d'erreurs centralisée** : middleware global côté API (messages clairs, pas de
+  fuite de stack trace) + validations métier (numéro client / email uniques).
+
+---
+
+## Architecture (Clean Architecture)
+
+```
+backend/  Api  →  Core  ←  Infrastructure
+          (EndPoints,     (Models, UseCases,   (Repositories Dapper,
+           middleware,     IGateways —          Gateways, db.sql —
+           JWT, CORS)      aucune dépendance)   dépend de Core)
+frontend/ src/app  (pages, components, services, guards, interceptors)
+```
+
+- Accès aux données **uniquement via Dapper** (aucun Entity Framework).
+- Sens des dépendances : `Api → Core ← Infrastructure` (le Core ne dépend de rien).
+- État Angular géré **par services** (pas de store externe type NgRx).
 
 ---
 
