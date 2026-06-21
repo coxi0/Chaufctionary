@@ -35,7 +35,7 @@
               <td class="actions">
                 <a [routerLink]="['/clients', d.clientId, 'modifier']"
                    [queryParams]="{ proposition: d.message }">Modifier</a>
-                <button class="danger" (click)="refuser(d.id)">Refuser</button>
+                <button class="danger" (click)="supprimer(d.id)">Supprimer</button>
               </td>
             }
           </tr>

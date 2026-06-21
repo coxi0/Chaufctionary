@@ -35,8 +35,8 @@ export class Demandes implements OnInit {
     });
   }
 
-  refuser(id: number): void {
-    if (!confirm('Refuser cette demande ?')) return;
+  supprimer(id: number): void {
+    if (!confirm('Supprimer cette demande ?')) return;
     this.demandeApi.supprimer(id).subscribe(() => this.charger());
   }
 }
